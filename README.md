@@ -1,36 +1,202 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+📊 Mini Creator Dashboard
 
-## Getting Started
+This project is a small dashboard built using Next.js, TypeScript, and shadcn/ui.
+It displays a list of creators and allows sorting, filtering, and viewing summary metrics.
 
-First, run the development server:
+This was built as part of a Tech Intern assignment to demonstrate:
 
-```bash
+frontend fundamentals
+
+clean separation of logic and UI
+
+and basic unit testing
+
+🚀 Tech Stack
+
+Next.js (App Router)
+
+TypeScript
+
+shadcn/ui (used for all UI components)
+
+Tailwind CSS
+
+Vitest (for unit testing)
+
+No external table, sorting, or filtering libraries were used.
+
+📦 Getting Started
+1️⃣ Clone the repository
+git clone https://github.com/krishna-131326/Mini-Creator-Dashboard.git
+cd Mini-Creator-Dashboard
+
+2️⃣ Install dependencies
+npm install
+
+3️⃣ Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open http://localhost:3000
+ in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4️⃣ Run unit tests
+npm test
 
-## Learn More
+📁 Project Structure
+src/
+├─ app/
+│  └─ page.tsx               # Main dashboard page
+├─ components/
+│  ├─ CreatorTable.tsx       # Table component
+│  └─ SummaryCards.tsx       # Summary metric cards
+├─ components/ui/            # shadcn UI components only
+├─ data/
+│  └─ creators.ts            # Hardcoded creator data
+├─ lib/
+│  └─ creators.ts            # Sorting, filtering, metrics logic
+└─ __tests__/
+   └─ creators.test.ts       # Unit tests for core logic
 
-To learn more about Next.js, take a look at the following resources:
+🧠 Key Design Decisions
+1️⃣ Separation of Logic and UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All business logic such as:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+sorting
 
-## Deploy on Vercel
+filtering
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+calculating metrics
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+is kept inside:
+
+src/lib/creators.ts
+
+
+UI components only use the results from these functions.
+This makes the code:
+
+easier to test
+
+easier to understand
+
+easier to maintain
+
+2️⃣ Sorting
+
+Sorting is implemented manually using Array.sort
+
+Supported fields:
+
+followers
+
+revenue
+
+Both ascending and descending sorting are supported
+
+Tie-breaking rule:
+If two creators have the same value, they are sorted by name (ascending).
+This ensures consistent and predictable ordering.
+
+3️⃣ Filtering
+
+Two filters are supported:
+
+Search by name (case-insensitive)
+
+Active-only toggle
+
+Both filters work together.
+Filtering is applied before sorting so the sorted result always matches the filtered list.
+
+4️⃣ Derived Metrics
+
+The dashboard shows:
+
+Total creators
+
+Active creators
+
+Total revenue
+
+Average revenue per active creator
+
+Edge case handling:
+
+If there are 0 active creators, average revenue is shown as 0 to avoid divide-by-zero errors.
+
+5️⃣ Empty State
+
+If no creators match the selected filters:
+
+A clear empty message is shown
+
+An empty table is not displayed
+
+This improves user experience and avoids confusion.
+
+🧪 Testing Strategy
+
+Unit tests are written using Vitest
+
+Only pure logic inside lib/creators.ts is tested
+
+UI components are intentionally not tested to keep tests stable
+
+Tests cover:
+
+Sorting followers (ascending & descending)
+
+Sorting revenue (ascending & descending)
+
+Stable sorting when values are equal
+
+Combined filtering (search + active)
+
+Average revenue calculation when no active creators exist
+
+📈 Scaling to 10,000 Creators (Future Improvements)
+
+If this app needed to support a much larger dataset, I would:
+
+Memoize calculations
+Use useMemo to avoid unnecessary recalculations
+
+Move logic to the backend
+Perform sorting and filtering on the server
+
+Add pagination or virtualization
+Render only visible rows for better performance
+
+Debounce search input
+Reduce filtering frequency while typing
+
+Use indexed database queries
+Index fields like name, active status, and followers
+
+✅ Assignment Checklist
+
+ Next.js App Router
+
+ TypeScript
+
+ shadcn/ui only
+
+ Manual sorting and filtering
+
+ Stable sorting
+
+ Derived metrics
+
+ Empty state handling
+
+ Unit tests for core logic
+
+ Clean project structure
+
+ Clear README with explanations
+
+👤 Author
+
+Krishna Choudhary
