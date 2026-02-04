@@ -1,5 +1,6 @@
 "use client"
 
+import styles from "./page.module.css"
 import { useState } from "react"
 import { creators as rawCreators } from "@/data/creators"
 import {
@@ -32,31 +33,33 @@ export default function Home() {
   }
 
   return (
-    <main className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Mini Creator Dashboard</h1>
+    <main className={styles.container}>
+      <div className={styles.wrapper}>
+        <h1 className="text-2xl font-bold">Mini Creator Dashboard</h1>
 
-      <SummaryCards {...metrics} />
+        <SummaryCards {...metrics} />
 
-      <div className="flex items-center gap-4">
-        <Input
-          placeholder="Search by name..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="flex items-center gap-4">
+          <Input
+            placeholder="Search by name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-        <div className="flex items-center gap-2">
-          <Switch checked={activeOnly} onCheckedChange={setActiveOnly} />
-          <span className="text-sm">Active only</span>
+          <div className="flex items-center gap-2">
+            <Switch checked={activeOnly} onCheckedChange={setActiveOnly} />
+            <span className="text-sm">Active only</span>
+          </div>
         </div>
-      </div>
 
-      {sorted.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
-          No creators match the selected filters.
-        </p>
-      ) : (
-        <CreatorTable creators={sorted} onSort={handleSort} />
-      )}
+        {sorted.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            No creators match the selected filters.
+          </p>
+        ) : (
+          <CreatorTable creators={sorted} onSort={handleSort} />
+        )}
+      </div>
     </main>
   )
 }
